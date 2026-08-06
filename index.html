@@ -551,12 +551,15 @@ function crearTarjeta(r, termino) {
   ).join('');
   // Obtener primer número de inventario para buscar la portada
   const invPrimero = r.inventario ? r.inventario.split(',')[0].trim() : '';
+  // Subcarpeta = primeras 3 cifras del número de inventario
+  const subcarpeta = invPrimero ? invPrimero.slice(0,3) : '';
   const urlBase = 'https://raw.githubusercontent.com/bip1rw-droid/catalogobp1/main/tapas/';
+  const urlImg = urlBase + subcarpeta + '/' + invPrimero;
   const portadaHTML = invPrimero ? `
     <img class="card-portada"
-      src="${urlBase}${invPrimero}.webp"
+      src="${urlImg}.webp"
       alt="Portada"
-      onerror="this.src='${urlBase}${invPrimero}.jpg';this.onerror=function(){this.src='${urlBase}${invPrimero}.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex';};};"
+      onerror="this.src='${urlImg}.jpg';this.onerror=function(){this.src='${urlImg}.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex';};};"
     >
     <div class="card-portada-placeholder" style="display:none">📖</div>` : '<div class="card-portada-placeholder">📖</div>';
 
