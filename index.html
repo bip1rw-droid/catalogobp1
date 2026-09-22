@@ -223,6 +223,27 @@
   .tema-tag:hover { background: var(--azul-medio); color: white; }
   .card-inv { font-size: 11px; color: #aaa; margin-top: 4px; }
   .card-isbn { font-size: 11px; color: #aaa; }
+  .card-portada {
+    width: 100%;
+    height: auto;
+    max-height: 260px;
+    object-fit: contain;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+    background: var(--fondo);
+    display: block;
+  }
+  .card-portada-placeholder {
+    width: 100%;
+    height: 120px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    background: var(--fondo);
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+  }
   .btn-favorito {
     position: absolute;
     top: 10px;
@@ -386,7 +407,7 @@
   </div>
   <div class="redes">
     <a class="red-btn red-fb" href="https://www.facebook.com/profile.php?id=100087511205917&locale=es_LA" target="_blank" title="Facebook">f</a>
-    <a class="red-btn red-ig" href="https://www.instagram.com/Bip1rw" target="_blank" title="Instagram">📷</a>
+    <a class="red-btn red-ig" href="https://www.instagram.com/Bp1rw" target="_blank" title="Instagram">📷</a>
   </div>
 </div>
 
@@ -528,8 +549,20 @@ function crearTarjeta(r, termino) {
   const temasHTML = r.temas.slice(0, 5).map(t =>
     `<span class="tema-tag" onclick="filtrarPorTema('${t.replace(/'/g,"\\'")}')">` + resaltar(t, termino) + `</span>`
   ).join('');
+  // Obtener primer número de inventario para buscar la portada
+  const invPrimero = r.inventario ? r.inventario.split(',')[0].trim() : '';
+  const urlBase = 'https://raw.githubusercontent.com/bip1rw-droid/catalogobp1/main/tapas/';
+  const portadaHTML = invPrimero ? `
+    <img class="card-portada"
+      src="${urlBase}${invPrimero}.webp"
+      alt="Portada"
+      onerror="this.src='${urlBase}${invPrimero}.jpg';this.onerror=function(){this.src='${urlBase}${invPrimero}.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex';};};"
+    >
+    <div class="card-portada-placeholder" style="display:none">📖</div>` : '<div class="card-portada-placeholder">📖</div>';
+
   return `<div class="card" id="card-${idx}">
     <button class="btn-favorito ${esFav?'activo':''}" onclick="toggleFavorito(${idx})">${esFav?'❤️':'🤍'}</button>
+    ${portadaHTML}
     <div class="card-titulo">${resaltar(r.titulo, termino)}</div>
     ${r.autor ? `<div class="card-autor">✍️ ${resaltar(r.autor, termino)}</div>` : ''}
     <div class="card-meta">${r.editorial?`📖 ${r.editorial}`:''}${r.lugar?` · ${r.lugar}`:''}${r.anio?` · ${r.anio}`:''}</div>
