@@ -455,7 +455,7 @@
 </div>
 
 <div class="footer">
-  📍 Brown 505, Rawson, Chubut &nbsp;|&nbsp;
+  📍 Alejandro Maiz 110, Rawson, Chubut &nbsp;|&nbsp;
   📞 2804220877 &nbsp;|&nbsp;
   <a href="mailto:bp1usuarios@gmail.com">✉️ Mail</a> &nbsp;|&nbsp;
   <a href="https://wa.me/542804220877">💬 WhatsApp</a>
@@ -551,15 +551,12 @@ function crearTarjeta(r, termino) {
   ).join('');
   // Obtener primer número de inventario para buscar la portada
   const invPrimero = r.inventario ? r.inventario.split(',')[0].trim() : '';
-  // Subcarpeta = primeras 3 cifras del número de inventario
-  const subcarpeta = invPrimero ? invPrimero.slice(0,3) : '';
   const urlBase = 'https://raw.githubusercontent.com/bip1rw-droid/catalogobp1/main/tapas/';
-  const urlImg = urlBase + subcarpeta + '/' + invPrimero;
   const portadaHTML = invPrimero ? `
     <img class="card-portada"
-      src="${urlImg}.webp"
+      src="${urlBase}${invPrimero}.webp"
       alt="Portada"
-      onerror="this.src='${urlImg}.jpg';this.onerror=function(){this.src='${urlImg}.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex';};};"
+      onerror="this.src='${urlBase}${invPrimero}.jpg';this.onerror=function(){this.src='${urlBase}${invPrimero}.png';this.onerror=function(){this.style.display='none';this.nextElementSibling.style.display='flex';};};"
     >
     <div class="card-portada-placeholder" style="display:none">📖</div>` : '<div class="card-portada-placeholder">📖</div>';
 
